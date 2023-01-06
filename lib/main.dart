@@ -1,3 +1,6 @@
+import 'package:eshopingcart/screens/UserProductsScreen.dart';
+import 'package:eshopingcart/screens/edit_product.dart';
+
 import './screens/orders.dart';
 
 import './providers/cart.dart';
@@ -40,6 +43,8 @@ class MyApp extends StatelessWidget {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
           CartScreen.routeName: (ctx) => const CartScreen(),
           OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+          UserProductsScreen.routeName: (ctx) => const UserProductsScreen(),
+          EditProductScreen.routeName: (ctx) => const EditProductScreen(),
         },
       ),
     );

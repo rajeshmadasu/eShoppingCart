@@ -1,3 +1,5 @@
+import 'package:eshopingcart/screens/UserProductsScreen.dart';
+
 import '../screens/orders.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +12,7 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: Text('Hello Friend'),
+            title: Text('eShopping Cart'),
             automaticallyImplyLeading: false,
           ),
           Divider(),
@@ -28,6 +30,14 @@ class AppDrawer extends StatelessWidget {
                 Navigator.of(context)
                     .pushReplacementNamed(OrdersScreen.routeName);
               })),
+          Divider(),
+          ListTile(
+              leading: Icon(Icons.edit),
+              title: Text('Manage Products'),
+              onTap: (() {
+                Navigator.of(context)
+                    .pushReplacementNamed(UserProductsScreen.routeName);
+              }))
         ],
       ),
     );
