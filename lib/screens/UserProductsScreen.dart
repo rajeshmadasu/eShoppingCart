@@ -1,4 +1,4 @@
-import 'package:eshopingcart/screens/edit_product.dart';
+import 'package:eshopingcart/screens/edit_product_screen.dart';
 import 'package:eshopingcart/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +31,7 @@ class UserProductsScreen extends StatelessWidget {
           itemBuilder: (_, index) => Column(
             children: [
               UserProductItem(
+                  id: productsData.items[index].id!,
                   title: productsData.items[index].title,
                   imageUrl: productsData.items[index].imageUrl),
               Divider()

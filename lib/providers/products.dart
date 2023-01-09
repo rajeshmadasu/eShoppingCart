@@ -70,7 +70,6 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
-    // _items.add(value);
     final newProduct = Product(
         id: DateTime.now().toString(),
         title: product.title,
@@ -78,8 +77,24 @@ class Products with ChangeNotifier {
         price: product.price,
         imageUrl: product.imageUrl);
 
-    _items.add(product);
+    _items.add(newProduct);
 
+    notifyListeners();
+  }
+
+  void updateProduct(String id, Product newProduct) {
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+
+    if (prodIndex >= 0) {
+      _items[prodIndex] = newProduct;
+      notifyListeners();
+    } else {
+      print('...');
+    }
+  }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prod) => prod.id == id);
     notifyListeners();
   }
 }

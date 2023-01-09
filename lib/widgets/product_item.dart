@@ -39,14 +39,14 @@ class ProductItem extends StatelessWidget {
           ),
           trailing: IconButton(
             onPressed: () {
-              cart.addItem(product.id, product.price, product.title);
+              cart.addItem(product.id!, product.price, product.title);
               final snackBar = SnackBar(
                 duration: Duration(seconds: 2),
                 content: Text('product added ${product.title}'),
                 action: SnackBarAction(
                   label: 'Undo',
                   onPressed: () {
-                    cart.removeSingleItem(product.id);
+                    cart.removeSingleItem(product.id!);
                   },
                 ),
               );
