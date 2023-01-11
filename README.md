@@ -16,3 +16,7 @@ What's a good example for local state which you would typically handle via a Sta
 	A)This is some state/ data that only matters to one (or a few) widgets. It certainly doesn't need to be managed globally.
 
 
+Sending Http Requests: https://flutter.dev/docs/cookbook/networking/fetch-data
+
+
+Implemented Pull to refresh in manage product screen

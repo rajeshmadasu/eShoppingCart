@@ -1,4 +1,5 @@
 import 'package:eshopingcart/screens/UserProductsScreen.dart';
+import 'package:eshopingcart/screens/auth_screen.dart';
 import 'package:eshopingcart/screens/edit_product_screen.dart';
 
 import './screens/orders.dart';
@@ -8,10 +9,10 @@ import './providers/orders.dart';
 import './screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
-import './screens/products_overview.dart';
 import 'package:flutter/material.dart';
 import './screens/product_detail_screen.dart';
 import './providers/products.dart';
+import './providers/auth.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (ctx) => Products()),
         ChangeNotifierProvider(create: (ctx) => Cart()),
-        ChangeNotifierProvider(create: (ctx) => Orders())
+        ChangeNotifierProvider(create: (ctx) => Orders()),
+        ChangeNotifierProvider(create: (ctx) => Auth())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
               .copyWith(secondary: Colors.deepOrange),
           fontFamily: 'Lato',
         ),
-        home: ProductsOverviewScreen(),
+        home: AuthScreen(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
           CartScreen.routeName: (ctx) => const CartScreen(),
