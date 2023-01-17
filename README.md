@@ -19,4 +19,5 @@ What's a good example for local state which you would typically handle via a Sta
 Sending Http Requests: https://flutter.dev/docs/cookbook/networking/fetch-data
 
 
-Implemented Pull to refresh in manage product screen
+-> Implemented Pull to refresh in manage product screen
+-> Added animation for AuthScreen using AnimationContainer for smooth transition

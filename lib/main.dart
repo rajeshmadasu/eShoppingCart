@@ -1,3 +1,5 @@
+import '../helpers/custom_route.dart';
+
 import './screens/UserProductsScreen.dart';
 import './screens/auth_screen.dart';
 import './screens/edit_product_screen.dart';
@@ -53,6 +55,10 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
+              pageTransitionsTheme: PageTransitionsTheme(builders: {
+                TargetPlatform.android: CustomPageTransitionBuilder(),
+                TargetPlatform.iOS: CustomPageTransitionBuilder()
+              }),
               colorScheme: ColorScheme.fromSwatch()
                   .copyWith(primary: Colors.purple, error: Colors.red)
                   .copyWith(secondary: Colors.deepOrange),
