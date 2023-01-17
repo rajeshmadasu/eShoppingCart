@@ -38,7 +38,7 @@ class OrdersScreen extends StatelessWidget {
               }
             }
           }),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
     );
   }
 }

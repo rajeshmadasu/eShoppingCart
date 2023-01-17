@@ -65,12 +65,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   ],
                 )));
       }
-      // finally {
-      //   setState(() {
-      //     _isLoading = false;
-      //   });
-      //   Navigator.of(context).pop();
-      // }
     }
     setState(() {
       _isLoading = false;
@@ -143,7 +137,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
         ],
       ),
       body: _isLoading
-          ? Center(child: const CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(

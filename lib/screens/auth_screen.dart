@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
+import '../models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -106,6 +107,23 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('An Error occured'),
+        content: Text(message),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: const Text("Okay"))
+        ],
+      ),
+    );
+  }
+
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) {
       // Invalid!
@@ -115,14 +133,36 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-      await Provider.of<Auth>(context, listen: false).signIn(
-          _authData['email'].toString(), _authData['password'].toString());
-    } else {
-      // Sign user up
-      await Provider.of<Auth>(context, listen: false).signUp(
-          _authData['email'].toString(), _authData['password'].toString());
+
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        await Provider.of<Auth>(context, listen: false).signIn(
+            _authData['email'].toString(), _authData['password'].toString());
+      } else {
+        // Sign user up
+        await Provider.of<Auth>(context, listen: false).signUp(
+            _authData['email'].toString(), _authData['password'].toString());
+      }
+    } on HttpException catch (error) {
+      var errorMessage = 'Authenticate Failed';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email address is already in use';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find a user with that email';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'The password is too weak';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid password';
+      }
+
+      _showErrorDialog(errorMessage);
+    } catch (error) {
+      var errorMessage = 'Could not authenticate you. Please try again later';
+
+      _showErrorDialog(errorMessage);
     }
     setState(() {
       _isLoading = false;
@@ -154,14 +194,14 @@ class _AuthCardState extends State<AuthCard> {
         constraints:
             BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
         width: deviceSize.width * 0.75,
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'E-Mail'),
+                  decoration: const InputDecoration(labelText: 'E-Mail'),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value!.isEmpty || !value.contains('@')) {
@@ -178,7 +218,7 @@ class _AuthCardState extends State<AuthCard> {
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
-                    if (value!.isEmpty || value!.length < 5) {
+                    if (value!.isEmpty || value.length < 5) {
                       return 'Password is too short!';
                     }
                   },
@@ -189,7 +229,8 @@ class _AuthCardState extends State<AuthCard> {
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
                     enabled: _authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
+                    decoration:
+                        const InputDecoration(labelText: 'Confirm Password'),
                     obscureText: true,
                     validator: _authMode == AuthMode.Signup
                         ? (value) {
@@ -203,7 +244,7 @@ class _AuthCardState extends State<AuthCard> {
                   height: 20,
                 ),
                 if (_isLoading)
-                  CircularProgressIndicator()
+                  const CircularProgressIndicator()
                 else
                   ElevatedButton(
                     onPressed: _submit,

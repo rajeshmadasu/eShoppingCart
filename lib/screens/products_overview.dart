@@ -24,12 +24,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
   var _isInit = true;
   var _isLoading = true;
-  @override
-  void initState() {
-    super.initState();
-    // Future.delayed(Duration.zero).then((_) =>
-    //     {Provider.of<Products>(context, listen: false).fetchAndSetProducts()});
-  }
 
   @override
   void didChangeDependencies() {
@@ -64,15 +58,15 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                 }
               });
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.more_vert,
             ),
             itemBuilder: (_) => [
-              PopupMenuItem(
+              const PopupMenuItem(
                 value: FilterOptions.Favorites,
-                child: const Text('Only Favorites'),
+                child: Text('Only Favorites'),
               ),
-              PopupMenuItem(
+              const PopupMenuItem(
                 value: FilterOptions.All,
                 child: Text('Show All'),
               ),
@@ -87,12 +81,12 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   onPressed: () {
                     Navigator.of(context).pushNamed(CartScreen.routeName);
                   },
-                  icon: Icon(Icons.shopping_cart)))
+                  icon: const Icon(Icons.shopping_cart)))
         ],
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: _isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : ProductsGrid(_showOnlyFavorites),

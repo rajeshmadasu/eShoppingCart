@@ -1,6 +1,7 @@
 import 'package:eshopingcart/providers/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../providers/auth.dart';
 import '../screens/product_detail_screen.dart';
 import '../providers/product.dart';
 
@@ -18,6 +19,7 @@ class ProductItem extends StatelessWidget {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
 
+    final authData = Provider.of<Auth>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -30,7 +32,8 @@ class ProductItem extends StatelessWidget {
           leading: Consumer<Product>(
             builder: (ctx, value, _) => IconButton(
               onPressed: () {
-                product.toggleFavoritesStatus();
+                product.toggleFavoritesStatus(
+                    authData.token.toString(), authData.userId.toString());
               },
               icon: Icon(
                   product.isFavorite ? Icons.favorite : Icons.favorite_border),
@@ -39,14 +42,14 @@ class ProductItem extends StatelessWidget {
           ),
           trailing: IconButton(
             onPressed: () {
-              cart.addItem(product.id!, product.price, product.title);
+              cart.addItem(product.id, product.price, product.title);
               final snackBar = SnackBar(
-                duration: Duration(seconds: 2),
+                duration: const Duration(seconds: 2),
                 content: Text('product added ${product.title}'),
                 action: SnackBarAction(
                   label: 'Undo',
                   onPressed: () {
-                    cart.removeSingleItem(product.id!);
+                    cart.removeSingleItem(product.id);
                   },
                 ),
               );

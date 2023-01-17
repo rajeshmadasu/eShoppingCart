@@ -41,6 +41,10 @@ class Products with ChangeNotifier {
   ];
   // var _showFavoritesOnly = false;
 
+  final String authToken;
+  final String userId;
+  Products(this.authToken, this._items, this.userId);
+
   List<Product> get items {
     // if (_showFavoritesOnly) {
     //   return _items.where((prodItem) => prodItem.isFavorite).toList();
@@ -56,8 +60,11 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  Future<void> fetchAndSetProducts() async {
-    const url = "https://utopian-button-116208.firebaseio.com/products.json";
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final String filterString =
+        filterByUser ? "orderBy=\"creatorId\"&equalTo=\"$userId\"" : '';
+    var url =
+        "https://utopian-button-116208.firebaseio.com/products.json?auth=$authToken&$filterString";
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -66,14 +73,25 @@ class Products with ChangeNotifier {
         return;
       }
 
+      url =
+          "https://utopian-button-116208.firebaseio.com/userfavorites/$userId.json?auth=$authToken";
+
+      final favoriteResponse = await http.get(Uri.parse(url));
+
+      final favoriteData =
+          json.decode(favoriteResponse.body) as Map<String, dynamic>;
+
       final List<Product> loadedProds = [];
       extractedData.forEach((prodId, prodData) {
         loadedProds.add(Product(
-            id: prodId,
-            title: prodData['title'],
-            description: prodData['description'],
-            price: prodData['price'],
-            imageUrl: prodData['imageUrl']));
+          id: prodId,
+          title: prodData['title'],
+          description: prodData['description'],
+          price: prodData['price'],
+          imageUrl: prodData['imageUrl'],
+          isFavorite:
+              favoriteData == null ? false : favoriteData[prodId] ?? false,
+        ));
       });
       _items = loadedProds;
       notifyListeners();
@@ -83,10 +101,12 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const url = "https://utopian-button-116208.firebaseio.com/products.json";
+    final url =
+        "https://utopian-button-116208.firebaseio.com/products.json?auth=$authToken";
 
     final response = await http.post(Uri.parse(url),
         body: json.encode({
+          'creatorId': userId,
           'title': product.title,
           'description': product.description,
           'price': product.price,
@@ -110,7 +130,7 @@ class Products with ChangeNotifier {
 
     if (prodIndex >= 0) {
       final url =
-          "https://utopian-button-116208.firebaseio.com/products/$id.json";
+          "https://utopian-button-116208.firebaseio.com/products/$id.json?auth=$authToken";
 
       await http.patch(Uri.parse(url),
           body: json.encode({
@@ -122,13 +142,12 @@ class Products with ChangeNotifier {
       _items[prodIndex] = newProduct;
 
       notifyListeners();
-    } else {
-      print('...');
     }
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = "https://utopian-button-116208.firebaseio.com/products/$id";
+    final url =
+        "https://utopian-button-116208.firebaseio.com/products/$id.json?auth=$authToken";
 
     final existingProdIndex = _items.indexWhere((prod) => prod.id == id);
     Product? existingProduct = _items[existingProdIndex];
