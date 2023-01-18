@@ -21,3 +21,38 @@ Sending Http Requests: https://flutter.dev/docs/cookbook/networking/fetch-data
 
 -> Implemented Pull to refresh in manage product screen
 -> Added animation for AuthScreen using AnimationContainer for smooth transition
+
+Custom shaped AppBar as seen in the “Bunny Search” app using SliverAppBar and SliverList , CustomerScrollView
+
+https://medium.com/flutter-community/custom-shaped-appbar-as-seen-in-the-bunny-search-app-6312d067485c
+https://medium.com/flutter-community/basics-of-neumorphism-in-flutter-f4d678ef08d1
+
+
+
+
+
+
+Generate Apk file from aab file (android app bundle)
+
+For Debug apk command,
+
+bundletool build-apks --bundle=/MyApp/my_app.aab --output=/MyApp/my_app.apks
+For Release apk command,
+
+bundletool build-apks --bundle=/MyApp/my_app.aab --output=/MyApp/my_app.apks
+--ks=/MyApp/keystore.jks
+--ks-pass=file:/MyApp/keystore.pwd
+--ks-key-alias=MyKeyAlias
+--key-pass=file:/MyApp/key.pwd
+
+To generate different apks from release aab 
+
+java -jar "bundletool.jar" build-apks --bundle=C:\FlutterWorkspace\eshopingcart\build\app\outputs\bundle\release\app-release.aab --output=C:\FlutterWorkspace\eshopingcart/shoppye_release.apks --ks="C:\FlutterWorkspace\eshopingcart\android\upload-keystore.jks" --ks-pass=pass:rajesh --ks-key-alias=upload --key-pass=pass:rajesh
+
+
+
+
+https://stackoverflow.com/questions/53040047/generate-apk-file-from-aab-file-android-app-bundle
+
+
+https://pgicons.abiro.com/

@@ -40,50 +40,90 @@ class AuthScreen extends StatelessWidget {
               height: deviceSize.height,
               width: deviceSize.width,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Flexible(
+                      child: SizedBox(
+                    height: deviceSize.height / 16,
+                  )),
+                  Flexible(
+                    flex: 1,
+                    fit: FlexFit.loose,
                     child: Container(
-                      margin: const EdgeInsets.only(bottom: 20.0),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 94.0),
-                      transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.deepOrange.shade900,
-                        boxShadow: const [
-                          BoxShadow(
-                            blurRadius: 8,
-                            color: Colors.black26,
-                            offset: Offset(0, 2),
-                          )
-                        ],
-                      ),
-                      child: Text(
-                        'MyShop',
-                        style: TextStyle(
-                          color: Theme.of(context)
-                              .accentTextTheme
-                              .titleLarge!
-                              .color,
-                          fontSize: 50,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
+                        height: deviceSize.height / 8,
+                        child: Text(
+                          'eShoppy Cart',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                const Shadow(
+                                    offset: Offset(3, 3),
+                                    color: Colors.black38,
+                                    blurRadius: 10),
+                                Shadow(
+                                    offset: Offset(-3, -3),
+                                    color: Colors.white.withOpacity(0.85),
+                                    blurRadius: 10)
+                              ],
+                              fontSize: 40,
+                              color: Color.fromARGB(255, 255, 171, 82)
+                                  .withOpacity(0.9)),
+                        )),
                   ),
                   Flexible(
-                    flex: deviceSize.width > 600 ? 2 : 1,
-                    child: const AuthCard(),
+                    flex: 2,
+                    fit: FlexFit.loose,
+                    child: Image.asset(
+                      'assets/images/banner_1_final.png',
+                      width: double.infinity,
+                      height: deviceSize.height / 4,
+                    ),
+                  ),
+                  const Flexible(
+                    fit: FlexFit.loose,
+                    flex: 2,
+                    child: AuthCard(),
                   ),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CustomTitleContainer extends StatelessWidget {
+  const CustomTitleContainer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
+      transform: Matrix4.rotationZ(-8 * pi / 180)..translate(-10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.deepOrange.shade900,
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 8,
+            color: Colors.black26,
+            offset: Offset(0, 2),
+          )
+        ],
+      ),
+      child: Text(
+        'MyShop',
+        style: TextStyle(
+          color: Theme.of(context).accentTextTheme.titleLarge!.color,
+          fontSize: 50,
+          fontFamily: 'Anton',
+          fontWeight: FontWeight.normal,
+        ),
       ),
     );
   }
