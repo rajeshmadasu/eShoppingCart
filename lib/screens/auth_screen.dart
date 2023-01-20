@@ -76,12 +76,12 @@ class AuthScreen extends StatelessWidget {
                     child: Image.asset(
                       'assets/images/banner_1_final.png',
                       width: double.infinity,
-                      height: deviceSize.height / 4,
+                      height: deviceSize.height / 3,
                     ),
                   ),
                   const Flexible(
                     fit: FlexFit.loose,
-                    flex: 2,
+                    flex: 4,
                     child: AuthCard(),
                   ),
                 ],

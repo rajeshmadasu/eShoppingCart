@@ -49,10 +49,16 @@ To generate different apks from release aab
 
 java -jar "bundletool.jar" build-apks --bundle=C:\FlutterWorkspace\eshopingcart\build\app\outputs\bundle\release\app-release.aab --output=C:\FlutterWorkspace\eshopingcart/shoppye_release.apks --ks="C:\FlutterWorkspace\eshopingcart\android\upload-keystore.jks" --ks-pass=pass:rajesh --ks-key-alias=upload --key-pass=pass:rajesh
 
-
-
-
 https://stackoverflow.com/questions/53040047/generate-apk-file-from-aab-file-android-app-bundle
 
 
+Thanks Freepick for illustrations
+https://www.freepik.com/free-vector/https://www.freepik.com/free-vector/black-friday-concept-illustration_10307453.htm
+
+Generate Splash screen from images
 https://pgicons.abiro.com/
+
+
+Reference:
+<img src="https://raw.githubusercontent.com/rajeshmadasu/eShoppingCartFlutter/main/screenshots/add_contact.png"  width="120" height="200" />
+<img src="https://raw.githubusercontent.com/rajeshmadasu/eShoppingCartFlutter/main/screenshots/add_contact.png"  width="120" height="200" />
